@@ -1,0 +1,5 @@
+/wp-cli.local.yml
+/docroot/wp-config-sample.php
+/docroot/wp-content/uploads/*
+/config/active-env
+/config/*-overrides.env.php
