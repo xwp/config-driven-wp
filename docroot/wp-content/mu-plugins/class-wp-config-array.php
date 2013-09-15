@@ -1,6 +1,11 @@
 <?php
 /**
- * @author Weston Ruter <weston@x-team.com>
+ * Plugin Name: class WP_Config_Array
+ * Description: Extension of the SPL ArrayObject to facilitate working with multi-dimensional associative arrays, especially for traversing and merging.
+ * Author: Weston Ruter, X-Team
+ * Author URI: http://x-team.com/wordpress/
+ * Version: 1.0
+ * License: GPLv2+
  */
 
 class WP_Config_Array extends ArrayObject {
