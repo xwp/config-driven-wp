@@ -8,7 +8,7 @@ return array(
 
 	/**
 	 * Theme support
-	 * @see _s_setup()
+	 * @see WP_Config_Drivers::after_setup_theme()
 	 */
 	'theme_support' => array(
 		/**
@@ -63,7 +63,7 @@ return array(
 	/**
 	 * Allow child themes to replace parent theme template tags without the original functions
 	 * EXPERIMENTAL! This requires the use of evil eval. Template tags would really better rely on partial templates.
-	 * @see inc/template-tags.php
+	 * @see WP_Config_Drivers::init()
 	 */
 	'template_tags' => array(
 		'_s_content_nav' => '_s_content_nav__',
@@ -74,7 +74,7 @@ return array(
 
 	/**
 	 * Menus the theme
-	 * @see _s_setup()
+	 * @see WP_Config_Drivers::after_setup_theme()
 	 */
 	'menus' => array(
 		'primary' => __( 'Primary Menu', '_s' ),
@@ -82,7 +82,7 @@ return array(
 
 	/**
 	 * Sidebar areas for the theme
-	 * @see inc/sidebars-widgets.php
+	 * @see WP_Config_Drivers::sidebars_widgets_init()
 	 */
 	'sidebars' => array(
 		'sidebar-1' => array(
@@ -91,12 +91,12 @@ return array(
 			'after_widget'  => '</aside>',
 			'before_title'  => '<h1 class="widget-title">',
 			'after_title'   => '</h1>',
-		)
+		),
 	),
 
 	/**
 	 * Image sizes that get added
-	 * @see _s_setup()
+	 * @see WP_Config_Drivers::after_setup_theme()
 	 */
 	'image_sizes' => array(
 		'post_thumbnail' => array(
@@ -108,7 +108,6 @@ return array(
 
 	/**
 	 * WordPress.com-specific configs
-	 * @see inc/wpcom.php
 	 */
 	'wpcom' => array(
 
@@ -127,7 +126,7 @@ return array(
 
 	/**
 	 * Frontend scripts which get registered and enqueued
-	 * @see inc/dependencies.php
+	 * @see WP_Config_Drivers::enqueue_scripts()
 	 */
 	'scripts' => array(
 		'_s-navigation' => array(
@@ -171,7 +170,7 @@ return array(
 
 	/**
 	 * Frontend stylesheets which get registered and enqueued
-	 * @see inc/dependencies.php
+	 * @see WP_Config_Drivers::enqueue_styles()
 	 */
 	'styles' => array(
 		'_s-style' => array(
@@ -182,7 +181,7 @@ return array(
 
 	/**
 	 * Theme-specific customizations to the Theme Customizer settings
-	 * @see inc/customizer.php
+	 * @see WP_Config_Drivers::customize_register()
 	 *
 	 * @todo As with the Paul Clark's Styles plugin which allows themes to include a
 	 * customize.json for mapping settings to elements via selectors, we should be

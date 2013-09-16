@@ -11,7 +11,6 @@
  * @global array $themecolors
  */
 function _s_wpcom_globalize_themecolors() {
-	global $theme_config;
-	$GLOBALS['themecolors'] = $theme_config->get( 'wpcom/themecolors', array() );
+	$GLOBALS['themecolors'] = WP_Config_Drivers::$site_config->get( 'wpcom/themecolors', array() );
 }
 add_action( 'init', '_s_wpcom_globalize_themecolors' );

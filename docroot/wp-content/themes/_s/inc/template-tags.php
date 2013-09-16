@@ -9,34 +9,6 @@
 
 
 /**
- * Allow child themes to replace parent theme template tags without the original functions
- * EXPERIMENTAL! This requires the use of evil eval. Template tags would really better rely on partial templates.
- */
-function _s_create_template_tags() {
-	global $theme_config;
-	$function_tpl = '
-		function %s(){
-			return call_user_func_array( %s, func_get_args() );
-		}
-	';
-	foreach( $theme_config->get( 'template_tags' ) as $template_tag => $function ) {
-		$ok = (
-			is_string( $template_tag )
-			&&
-			is_callable( $template_tag, true )
-			&&
-			is_callable( $function, true )
-		);
-		if ( $ok ) {
-			$function_code = sprintf( $function_tpl, $template_tag, var_export( $function, true ) );
-			eval( $function_code );
-		}
-	}
-}
-add_action( 'init', '_s_create_template_tags' );
-
-
-/**
  * Display navigation to next/previous pages when applicable
  */
 function _s_content_nav__( $nav_id ) {

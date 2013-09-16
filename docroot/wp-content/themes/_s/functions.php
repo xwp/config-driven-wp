@@ -5,21 +5,8 @@
  * @package _s
  */
 
-/**
- * @var WP_Config_Array|array Theme configuration merged from parent theme, child theme, and other sources
- * @global
- */
-$theme_config = array();
 
-/**
- * Sets up theme defaults and registers support for various WordPress features.
- *
- * Note that this function is hooked into the after_setup_theme hook, which runs
- * before the init hook. The init hook is too late for some features, such as indicating
- * support post thumbnails.
- */
 function _s_setup() {
-
 	/**
 	 * Make theme available for translation
 	 * Translations can be filed in the /languages/ directory
@@ -32,53 +19,18 @@ function _s_setup() {
 	 */
 	load_theme_textdomain( '_s', get_template_directory() . '/languages' );
 	do_action( '_s_load_text_domains' );
-
-	global $theme_config;
-	$theme_config = WP_Config_Array::load_config( locate_template( 'config.php' ) );
-
-	$GLOBALS['content_width'] = $theme_config->get( 'content_width' );
-
-	foreach ( $theme_config->get('theme_support', array() ) as $feature => $options ) {
-		if ( $options === false ) {
-			remove_theme_support( $feature );
-		}
-		else if (is_array($options)) {
-			if ( ! isset($options[0]) && in_array( $feature, array( 'post-formats' ) ) ) {
-				$options = array_keys( array_filter( $options ) );
-			}
-			add_theme_support($feature, $options);
-		}
-		else {
-			add_theme_support($feature);
-		}
-	}
-
-	register_nav_menus( array_filter( $theme_config->get( 'menus', array() ) ) );
-
-	foreach ( array_filter( $theme_config->get( 'image_sizes', array() ) ) as $name => $size_info ) {
-		extract( array_merge(
-			compact( 'name' ),
-			array(
-				'crop' => false,
-				'width' => 9999,
-				'height' => 9999,
-			),
-			$size_info
-		));
-		add_image_size( $name, $width, $height, $crop );
-	}
 }
-add_action( 'after_setup_theme', '_s_setup' );
+add_action( 'after_theme_setup', '_s_setup' );
 
-/**
- * Functions for the script and style dependencies.
- */
-require get_template_directory() . '/inc/sidebars-widgets.php';
 
-/**
- * Functions for the script and style dependencies.
- */
-require get_template_directory() . '/inc/dependencies.php';
+function _s_filter_wp_site_config_file( $site_config_file ) {
+	$theme_config_file = locate_template( 'config.php' );
+	if ( $theme_config_file ) {
+		$site_config_file = $theme_config_file;
+	}
+	return $site_config_file;
+}
+add_filter( 'wp_site_config_file', '_s_filter_wp_site_config_file' );
 
 /**
  * Functions for the Custom Header feature.
@@ -94,11 +46,6 @@ require get_template_directory() . '/inc/template-tags.php';
  * Custom functions that act independently of the theme templates.
  */
 require get_template_directory() . '/inc/extras.php';
-
-/**
- * Customizer additions.
- */
-require get_template_directory() . '/inc/customizer.php';
 
 /**
  * WordPress.com-specific functions and definitions
