@@ -7,11 +7,39 @@
  * @package _s
  */
 
-if ( ! function_exists( '_s_content_nav' ) ) :
+
+/**
+ * Allow child themes to replace parent theme template tags without the original functions
+ * EXPERIMENTAL! This requires the use of evil eval. Template tags would really better rely on partial templates.
+ */
+function _s_create_template_tags() {
+	global $theme_config;
+	$function_tpl = '
+		function %s(){
+			return call_user_func_array( %s, func_get_args() );
+		}
+	';
+	foreach( $theme_config->get( 'template_tags' ) as $template_tag => $function ) {
+		$ok = (
+			is_string( $template_tag )
+			&&
+			is_callable( $template_tag, true )
+			&&
+			is_callable( $function, true )
+		);
+		if ( $ok ) {
+			$function_code = sprintf( $function_tpl, $template_tag, var_export( $function, true ) );
+			eval( $function_code );
+		}
+	}
+}
+add_action( 'init', '_s_create_template_tags' );
+
+
 /**
  * Display navigation to next/previous pages when applicable
  */
-function _s_content_nav( $nav_id ) {
+function _s_content_nav__( $nav_id ) {
 	global $wp_query, $post;
 
 	// Don't print empty markup on single pages if there's nowhere to navigate.
@@ -53,15 +81,14 @@ function _s_content_nav( $nav_id ) {
 	</nav><!-- #<?php echo esc_html( $nav_id ); ?> -->
 	<?php
 }
-endif; // _s_content_nav
 
-if ( ! function_exists( '_s_comment' ) ) :
+
 /**
  * Template for comments and pingbacks.
  *
  * Used as a callback by wp_list_comments() for displaying the comments.
  */
-function _s_comment( $comment, $args, $depth ) {
+function _s_comment__( $comment, $args, $depth ) {
 	$GLOBALS['comment'] = $comment;
 
 	if ( 'pingback' == $comment->comment_type || 'trackback' == $comment->comment_type ) : ?>
@@ -113,13 +140,12 @@ function _s_comment( $comment, $args, $depth ) {
 	<?php
 	endif;
 }
-endif; // ends check for _s_comment()
 
-if ( ! function_exists( '_s_the_attached_image' ) ) :
+
 /**
  * Prints the attached image with a link to the next attached image.
  */
-function _s_the_attached_image() {
+function _s_the_attached_image__() {
 	$post                = get_post();
 	$attachment_size     = apply_filters( '_s_attachment_size', array( 1200, 1200 ) );
 	$next_attachment_url = wp_get_attachment_url();
@@ -165,13 +191,12 @@ function _s_the_attached_image() {
 		wp_get_attachment_image( $post->ID, $attachment_size )
 	);
 }
-endif;
 
-if ( ! function_exists( '_s_posted_on' ) ) :
+
 /**
  * Prints HTML with meta information for the current post-date/time and author.
  */
-function _s_posted_on() {
+function _s_posted_on__() {
 	$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time>';
 	if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) )
 		$time_string .= '<time class="updated" datetime="%3$s">%4$s</time>';
@@ -196,7 +221,7 @@ function _s_posted_on() {
 		)
 	);
 }
-endif;
+
 
 /**
  * Returns true if a blog has more than 1 category

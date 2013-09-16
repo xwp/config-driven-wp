@@ -61,6 +61,18 @@ return array(
 	),
 
 	/**
+	 * Allow child themes to replace parent theme template tags without the original functions
+	 * EXPERIMENTAL! This requires the use of evil eval. Template tags would really better rely on partial templates.
+	 * @see inc/template-tags.php
+	 */
+	'template_tags' => array(
+		'_s_content_nav' => '_s_content_nav__',
+		'_s_comment' => '_s_comment__',
+		'_s_the_attached_image' => '_s_the_attached_image__',
+		'_s_posted_on' => '_s_posted_on__',
+	),
+
+	/**
 	 * Menus the theme
 	 * @see _s_setup()
 	 */
