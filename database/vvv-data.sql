@@ -1215,7 +1215,7 @@ CREATE TABLE `wp_options` (
   `autoload` varchar(20) NOT NULL DEFAULT 'yes',
   PRIMARY KEY (`option_id`),
   UNIQUE KEY `option_name` (`option_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1264,8 +1264,8 @@ INSERT INTO `wp_options` VALUES (40,'comment_max_links','2','yes');
 INSERT INTO `wp_options` VALUES (41,'gmt_offset','0','yes');
 INSERT INTO `wp_options` VALUES (42,'default_email_category','1','yes');
 INSERT INTO `wp_options` VALUES (43,'recently_edited','','no');
-INSERT INTO `wp_options` VALUES (44,'template','_s','yes');
-INSERT INTO `wp_options` VALUES (45,'stylesheet','_s','yes');
+INSERT INTO `wp_options` VALUES (44,'template','radio','yes');
+INSERT INTO `wp_options` VALUES (45,'stylesheet','radio','yes');
 INSERT INTO `wp_options` VALUES (46,'comment_whitelist','1','yes');
 INSERT INTO `wp_options` VALUES (47,'blacklist_keys','','no');
 INSERT INTO `wp_options` VALUES (48,'comment_registration','0','yes');
@@ -1333,6 +1333,7 @@ INSERT INTO `wp_options` VALUES (109,'theme_mods_twentythirteen','a:1:{s:16:\"si
 INSERT INTO `wp_options` VALUES (110,'current_theme','_s','yes');
 INSERT INTO `wp_options` VALUES (111,'theme_mods__s','a:1:{i:0;b:0;}','yes');
 INSERT INTO `wp_options` VALUES (112,'theme_switched','','yes');
+INSERT INTO `wp_options` VALUES (115,'blog_upload_space','','yes');
 
 --
 -- Table structure for table `wp_postmeta`
