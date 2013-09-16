@@ -92,6 +92,16 @@ a img {
 /* =Global
 ----------------------------------------------- */
 
+html {
+	background: black;
+}
+body {
+	padding: 1em;
+	background: white;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 body,
 button,
 input,
