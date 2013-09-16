@@ -2,7 +2,7 @@
 return array(
 	/**
 	 * Set the content width based on the theme's design and stylesheet.
-	 * @see _s_setup()
+	 * @see radio_setup()
 	 */
 	'content_width' => 640, // px
 
@@ -31,7 +31,7 @@ return array(
 		/**
 		 * Setup the WordPress core custom background feature.
 		 */
-		'custom-background' => apply_filters( '_s_custom_background_args', array(
+		'custom-background' => apply_filters( 'radio_custom_background_args', array(
 			'default-color' => 'ffffff',
 			'default-image' => '',
 		) ),
@@ -39,15 +39,15 @@ return array(
 		/**
 		 * Setup the WordPress core custom header feature.
 		 */
-		'custom-header' => apply_filters( '_s_custom_header_args', array(
+		'custom-header' => apply_filters( 'radio_custom_header_args', array(
 			'default-image'          => '',
 			'default-text-color'     => '000',
 			'width'                  => 1000,
 			'height'                 => 250,
 			'flex-height'            => true,
-			'wp-head-callback'       => '_s_header_style',
-			'admin-head-callback'    => '_s_admin_header_style',
-			'admin-preview-callback' => '_s_admin_header_image',
+			'wp-head-callback'       => 'radio_header_style',
+			'admin-head-callback'    => 'radio_admin_header_style',
+			'admin-preview-callback' => 'radio_admin_header_image',
 		) ),
 
 		/**
@@ -66,10 +66,10 @@ return array(
 	 * @see WP_Config_Drivers::init()
 	 */
 	'template_tags' => array(
-		'_s_content_nav' => '_s_content_nav__',
-		'_s_comment' => '_s_comment__',
-		'_s_the_attached_image' => '_s_the_attached_image__',
-		'_s_posted_on' => '_s_posted_on__',
+		'radio_content_nav' => 'radio_content_nav__',
+		'radio_comment' => 'radio_comment__',
+		'radio_the_attached_image' => 'radio_the_attached_image__',
+		'radio_posted_on' => 'radio_posted_on__',
 	),
 
 	/**
@@ -77,7 +77,7 @@ return array(
 	 * @see WP_Config_Drivers::after_setup_theme()
 	 */
 	'menus' => array(
-		'primary' => __( 'Primary Menu', '_s' ),
+		'primary' => __( 'Primary Menu', 'radio' ),
 	),
 
 	/**
@@ -86,7 +86,7 @@ return array(
 	 */
 	'sidebars' => array(
 		'sidebar-1' => array(
-			'name'          => __( 'Sidebar', '_s' ),
+			'name'          => __( 'Sidebar', 'radio' ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</aside>',
 			'before_title'  => '<h1 class="widget-title">',
@@ -129,21 +129,21 @@ return array(
 	 * @see WP_Config_Drivers::enqueue_scripts()
 	 */
 	'scripts' => array(
-		'_s-navigation' => array(
+		'radio-navigation' => array(
 			'src' => get_template_directory_uri() . '/js/navigation.js',
 			'deps' => array(),
 			'enqueue' => true,
 			'ver' => '20120206',
 			'in_footer' => true,
 		),
-		'_s-skip-link-focus-fix' => array(
+		'radio-skip-link-focus-fix' => array(
 			'src' => get_template_directory_uri() . '/js/skip-link-focus-fix.js',
 			'deps' => array( 'jquery' ),
 			'enqueue' => true,
 			'ver' => '20130115',
 			'in_footer' => true,
 		),
-		'_s-keyboard-image-navigation' => array(
+		'radio-keyboard-image-navigation' => array(
 			'src' => get_template_directory_uri() . '/js/keyboard-image-navigation.js',
 			'deps' => array( 'jquery', ),
 			'enqueue' => function () {
@@ -152,7 +152,7 @@ return array(
 			'ver' => '20120202',
 			'in_footer' => true,
 		),
-		'_s_customizer' => array(
+		'radio_customizer' => array(
 			'src' => get_template_directory_uri() . '/js/customizer.js',
 			'deps' => array( 'customize-preview' ),
 			'enqueue' => function () {
@@ -173,7 +173,7 @@ return array(
 	 * @see WP_Config_Drivers::enqueue_styles()
 	 */
 	'styles' => array(
-		'_s-style' => array(
+		'radio-base-style' => array(
 			'src' => get_template_directory_uri() . '/style.css',
 			'enqueue' => true,
 		),

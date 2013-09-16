@@ -20,9 +20,9 @@
 /**
  * Styles the header image and text displayed on the blog
  *
- * @see _s_custom_header_setup().
+ * @see radio_custom_header_setup().
  */
-function _s_header_style() {
+function radio_header_style() {
 	$header_text_color = get_header_textcolor();
 
 	// If no custom options for text are set, let's bail
@@ -59,9 +59,9 @@ function _s_header_style() {
 /**
  * Styles the header image displayed on the Appearance > Header admin panel.
  *
- * @see _s_custom_header_setup().
+ * @see radio_custom_header_setup().
  */
-function _s_admin_header_style() {
+function radio_admin_header_style() {
 ?>
 	<style type="text/css">
 		.appearance_page_custom-header #headimg {
@@ -86,9 +86,9 @@ function _s_admin_header_style() {
 /**
  * Custom header image markup displayed on the Appearance > Header admin panel.
  *
- * @see _s_custom_header_setup().
+ * @see radio_custom_header_setup().
  */
-function _s_admin_header_image() {
+function radio_admin_header_image() {
 	$style        = sprintf( ' style="color:#%s;"', get_header_textcolor() );
 	$header_image = get_header_image();
 ?>

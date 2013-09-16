@@ -31,7 +31,7 @@ get_header(); ?>
 
 			<?php endwhile; ?>
 
-			<?php _s_content_nav( 'nav-below' ); ?>
+			<?php radio_content_nav( 'nav-below' ); ?>
 
 		<?php else : ?>
 

@@ -10,7 +10,7 @@
  *
  * @global array $themecolors
  */
-function _s_wpcom_globalize_themecolors() {
+function radio_wpcom_globalize_themecolors() {
 	$GLOBALS['themecolors'] = WP_Config_Drivers::$site_config->get( 'wpcom/themecolors', array() );
 }
-add_action( 'init', '_s_wpcom_globalize_themecolors' );
+add_action( 'init', 'radio_wpcom_globalize_themecolors' );
