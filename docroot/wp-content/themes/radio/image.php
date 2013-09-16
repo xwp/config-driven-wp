@@ -2,7 +2,7 @@
 /**
  * The template for displaying image attachments.
  *
- * @package _s
+ * @package radio
  */
 
 get_header();

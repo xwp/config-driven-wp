@@ -7,7 +7,7 @@
  * handled by a callback to radio_comment() which is
  * located in the inc/template-tags.php file.
  *
- * @package _s
+ * @package radio
  */
 
 /*

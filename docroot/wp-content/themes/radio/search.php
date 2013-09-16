@@ -2,7 +2,7 @@
 /**
  * The template for displaying Search Results pages.
  *
- * @package _s
+ * @package radio
  */
 
 get_header(); ?>

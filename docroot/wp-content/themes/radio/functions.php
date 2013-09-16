@@ -1,8 +1,8 @@
 <?php
 /**
- * _s functions and definitions
+ * radio functions and definitions
  *
- * @package _s
+ * @package radio
  */
 
 
@@ -10,7 +10,7 @@ function radio_setup() {
 	/**
 	 * Make theme available for translation
 	 * Translations can be filed in the /languages/ directory
-	 * If you're building a theme based on _s, use a find and replace
+	 * If you're building a theme based on radio, use a find and replace
 	 * to change 'radio' to the name of your theme in all the template files
 	 * We need to load the translations before loading the config, because
 	 * there be text translations in the config. Child themes which have

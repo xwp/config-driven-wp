@@ -4,7 +4,7 @@
  *
  * Contains the closing of the id=main div and all content after
  *
- * @package _s
+ * @package radio
  */
 ?>
 

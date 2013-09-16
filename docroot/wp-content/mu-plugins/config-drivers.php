@@ -227,13 +227,9 @@ class WP_Config_Drivers {
 		}
 	}
 
-
 	/**
-	 * Widgets for the theme
-	 * @see inc/sidebars-widgets.php
+	 * @todo Taxonomies, shortcodes, etc
 	 */
-	//'taxonomies' => array(),
-	//'shortcodes' => array()
 
 }
 
