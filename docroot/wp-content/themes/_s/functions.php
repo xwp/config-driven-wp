@@ -37,10 +37,22 @@ function _s_setup() {
 	 * Load the configs
 	 */
 	global $theme_config;
-	$theme_config = new WP_Config_Array( include( TEMPLATEPATH . '/config.php' ) );
-	if ( TEMPLATEPATH !== STYLESHEETPATH && file_exists( STYLESHEETPATH . '/config.php' ) ) {
-		$theme_config->extend( include( STYLESHEETPATH . '/config.php' ) );
+	if ( file_exists( STYLESHEETPATH . '/config.php' ) ) {
+		$config_file = STYLESHEETPATH . '/config.php';
 	}
+	else {
+		$config_file = TEMPLATEPATH . '/config.php';
+	}
+
+	$theme_config = new WP_Config_Array( require( $config_file ) );
+
+	// Allow a theme's config to make note of other configs that it extends
+	foreach ( array_keys( array_filter( $theme_config->get( 'base_configs', array() ) ) ) as $base_config_path ) {
+		$base_config = new WP_Config_Array( require( $base_config_path ) );
+		$base_config->extend( $theme_config->getArrayCopy() );
+		$theme_config = $base_config;
+	}
+
 	// @todo The configs should indicate which configs they extend
 	do_action( '_s_theme_config_loaded', $theme_config );
 

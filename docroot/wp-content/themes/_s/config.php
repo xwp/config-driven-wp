@@ -175,7 +175,7 @@ return array(
 	 */
 	'styles' => array(
 		'_s-style' => array(
-			'src' => get_stylesheet_uri(),
+			'src' => get_template_directory_uri() . '/style.css',
 			'enqueue' => true,
 		),
 	),
