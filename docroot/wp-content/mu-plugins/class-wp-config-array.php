@@ -4,11 +4,37 @@
  * Description: Extension of the SPL ArrayObject to facilitate working with multi-dimensional associative arrays, especially for traversing and merging.
  * Author: Weston Ruter, X-Team
  * Author URI: http://x-team.com/wordpress/
- * Version: 1.0
+ * Version: 1.1
  * License: GPLv2+
  */
 
 class WP_Config_Array extends ArrayObject {
+
+	/**
+	 * Load the config from file and let it merge on top of the base configs it defines. Base configs get sorted by key.
+	 * Remember to never use TEMPLATEPATH and STYLESHEETPATH!
+	 * @todo If one of the base_configs itself has a base config, it will not currently get recursively parsed
+	 * @param string $theme_config_file Location of PHP file which returns a config array
+	 * @param string $base_config_key The key for the array item containing the configs to merge on top of
+	 * @return WP_Config_Array
+	 */
+	static function load_config( $theme_config_file, $base_config_key = 'base_configs' ) {
+		$config = new self( require( $theme_config_file ) );
+
+		// Allow a config to make note of other configs that it extends
+		if ( $base_config_key ) {
+			$base_config_files = array_filter( $config->get( $base_config_key, array() ) );
+			ksort( $base_config_files );
+			foreach ( $base_config_files as $priority => $base_config_file ) {
+				$base_config = new WP_Config_Array( require( $base_config_file ) );
+				$base_config->extend( $config->getArrayCopy() );
+				$config = $base_config;
+			}
+		}
+
+		do_action( 'theme_config_loaded', $config );
+		return $config;
+	}
 
 	function __get( $name ) {
 		$value = $this[$name];

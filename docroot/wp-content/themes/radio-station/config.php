@@ -1,8 +1,10 @@
 <?php
 return array(
 
+	// Note the resulting base_configs gets an ksort
+	// @todo If a config here has a base_config, it will not currently get recursively parsed
 	'base_configs' => array(
-		get_template_directory() . '/config.php' => true,
+		'001' => get_template_directory() . '/config.php',
 	),
 
 	/**
