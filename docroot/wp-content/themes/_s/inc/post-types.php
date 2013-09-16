@@ -8,7 +8,7 @@ function _s_setup_post_types() {
 	global $theme_config;
 	foreach ( $theme_config->post_types as $post_type => $options ) {
 		if ( empty( $options['include_path'] ) ) {
-			$options['include_path'] = TEMPLATEPATH . '/post_types/' . $post_type . '.php';
+			$options['include_path'] = get_template_directory() . '/post_types/' . $post_type . '.php';
 		}
 		$setup_func = require( $options['include_path'] );
 		call_user_func( $setup_func, $options );

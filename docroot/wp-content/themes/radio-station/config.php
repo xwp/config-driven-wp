@@ -2,7 +2,7 @@
 return array(
 
 	'base_configs' => array(
-		TEMPLATEPATH . '/config.php' => true,
+		get_template_directory() . '/config.php' => true,
 	),
 
 	/**

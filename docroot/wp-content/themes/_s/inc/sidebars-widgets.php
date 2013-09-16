@@ -18,7 +18,7 @@ function _s_widgets_init() {
 			$options = array();
 		}
 		if ( empty( $options['include_path'] ) ) {
-			$options['include_path'] = TEMPLATEPATH . '/widgets/' . $id . '.php';
+			$options['include_path'] = get_template_directory() . '/widgets/' . $id . '.php';
 		}
 		require_once( $options['include_path'] );
 	}
