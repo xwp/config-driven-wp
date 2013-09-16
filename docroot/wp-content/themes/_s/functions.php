@@ -6,12 +6,11 @@
  */
 
 /**
- * Set the content width based on the theme's design and stylesheet.
+ * @var WP_Config_Array|array Theme configuration merged from parent theme, child theme, and other sources
+ * @global
  */
-if ( ! isset( $content_width ) )
-	$content_width = 640; /* pixels */
+$theme_config = array();
 
-if ( ! function_exists( '_s_setup' ) ) :
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -26,83 +25,73 @@ function _s_setup() {
 	 * Translations can be filed in the /languages/ directory
 	 * If you're building a theme based on _s, use a find and replace
 	 * to change '_s' to the name of your theme in all the template files
+	 * We need to load the translations before loading the config, because
+	 * there be text translations in the config. Child themes which have
+	 * configs with translations in them should load their textdomains
+	 * at the _s_load_text_domains action.
 	 */
 	load_theme_textdomain( '_s', get_template_directory() . '/languages' );
+	do_action( '_s_load_text_domains' );
 
 	/**
-	 * Add default posts and comments RSS feed links to head
+	 * Load the configs
 	 */
-	add_theme_support( 'automatic-feed-links' );
+	global $theme_config;
+	$theme_config = new WP_Config_Array( include( TEMPLATEPATH . '/config.php' ) );
+	if ( TEMPLATEPATH !== STYLESHEETPATH && file_exists( STYLESHEETPATH . '/config.php' ) ) {
+		$theme_config->extend( include( STYLESHEETPATH . '/config.php' ) );
+	}
+	// @todo The configs should indicate which configs they extend
+	do_action( '_s_theme_config_loaded', $theme_config );
 
-	/**
-	 * Enable support for Post Thumbnails on posts and pages
-	 *
-	 * @link http://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
-	 */
-	//add_theme_support( 'post-thumbnails' );
+	$GLOBALS['content_width'] = $theme_config->get( 'content_width' );
 
-	/**
-	 * This theme uses wp_nav_menu() in one location.
-	 */
-	register_nav_menus( array(
-		'primary' => __( 'Primary Menu', '_s' ),
-	) );
+	foreach ( $theme_config->get('theme_support', array() ) as $feature => $options ) {
+		if ( $options === false ) {
+			remove_theme_support( $feature );
+		}
+		else if (is_array($options)) {
+			if ( ! isset($options[0]) && in_array( $feature, array( 'post-formats' ) ) ) {
+				$options = array_keys( array_filter( $options ) );
+			}
+			add_theme_support($feature, $options);
+		}
+		else {
+			add_theme_support($feature);
+		}
+	}
 
-	/**
-	 * Enable support for Post Formats
-	 */
-	add_theme_support( 'post-formats', array( 'aside', 'image', 'video', 'quote', 'link' ) );
+	register_nav_menus( array_filter( $theme_config->get( 'menus', array() ) ) );
 
-	/**
-	 * Setup the WordPress core custom background feature.
-	 */
-	add_theme_support( 'custom-background', apply_filters( '_s_custom_background_args', array(
-		'default-color' => 'ffffff',
-		'default-image' => '',
-	) ) );
+	foreach ( array_filter( $theme_config->get( 'image_sizes', array() ) ) as $name => $size_info ) {
+		extract( array_merge(
+			compact( 'name' ),
+			array(
+				'crop' => false,
+				'width' => 9999,
+				'height' => 9999,
+			),
+			$size_info
+		));
+		add_image_size( $name, $width, $height, $crop );
+	}
 }
-endif; // _s_setup
 add_action( 'after_setup_theme', '_s_setup' );
 
 /**
- * Register widgetized area and update sidebar with default widgets
+ * Functions for the script and style dependencies.
  */
-function _s_widgets_init() {
-	register_sidebar( array(
-		'name'          => __( 'Sidebar', '_s' ),
-		'id'            => 'sidebar-1',
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</aside>',
-		'before_title'  => '<h1 class="widget-title">',
-		'after_title'   => '</h1>',
-	) );
-}
-add_action( 'widgets_init', '_s_widgets_init' );
+require get_template_directory() . '/inc/sidebars-widgets.php';
 
 /**
- * Enqueue scripts and styles
+ * Functions for the script and style dependencies.
  */
-function _s_scripts() {
-	wp_enqueue_style( '_s-style', get_stylesheet_uri() );
-
-	wp_enqueue_script( '_s-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );
-
-	wp_enqueue_script( '_s-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20130115', true );
-
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
-
-	if ( is_singular() && wp_attachment_is_image() ) {
-		wp_enqueue_script( '_s-keyboard-image-navigation', get_template_directory_uri() . '/js/keyboard-image-navigation.js', array( 'jquery' ), '20120202' );
-	}
-}
-add_action( 'wp_enqueue_scripts', '_s_scripts' );
+require get_template_directory() . '/inc/dependencies.php';
 
 /**
- * Implement the Custom Header feature.
+ * Functions for the Custom Header feature.
  */
-//require get_template_directory() . '/inc/custom-header.php';
+require get_template_directory() . '/inc/custom-header.php';
 
 /**
  * Custom template tags for this theme.
@@ -120,6 +109,6 @@ require get_template_directory() . '/inc/extras.php';
 require get_template_directory() . '/inc/customizer.php';
 
 /**
- * Load Jetpack compatibility file.
+ * WordPress.com-specific functions and definitions
  */
-require get_template_directory() . '/inc/jetpack.php';
+require get_template_directory() . '/inc/wpcom.php';
