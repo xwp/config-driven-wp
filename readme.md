@@ -39,6 +39,7 @@ access **[vvv.config-driven-wp.dev](http://vvv.config-driven-wp.dev/)** from you
 
 ## Test DB Dump Updates
 
+This repo includes a lightweight test database dump which contains the necessary content to test the features of the site.
 In the course of development, if you want to commit some change to the database, first connect with
 any other developers who are currently working on the site and obtain a "verbal file lock" on `database/vvv-data.sql`, 
 as merging SQL cannot be done cleanly (see also [`.gitattributes`](.gitattributes) which explicitly includes `*.sql merge=binary`).
