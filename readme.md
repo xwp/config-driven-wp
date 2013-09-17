@@ -41,7 +41,8 @@ access **[vvv.config-driven-wp.dev](http://vvv.config-driven-wp.dev/)** from you
 
 In the course of development, if you want to commit some change to the database, first connect with
 any other developers who are currently working on the site and obtain a "verbal file lock" on `database/vvv-data.sql`, 
-as merging SQL is not possible. Once you're clear to commit your changes to the database dump, run:
+as merging SQL cannot be done cleanly (see also [`.gitattributes`](.gitattributes) which explicitly includes `*.sql merge=binary`).
+Once you're clear to commit your changes to the database dump, run:
 
 ```sh
 bin/dump-db-vvv
