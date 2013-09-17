@@ -37,6 +37,8 @@ vagrant reload --provision
 Once this finishes (and you've added `vvv.config-driven-wp.dev` to your `hosts` file), you should be able to 
 access **[vvv.config-driven-wp.dev](http://vvv.config-driven-wp.dev/)** from your browser.
 
+## Test DB Dump Updates
+
 In the course of development, if you want to commit some change to the database, first connect with
 any other developers who are currently working on the site and obtain a "verbal file lock" on `database/vvv-data.sql`, 
 as merging SQL is not possible. Once you're clear to commit your changes to the database dump, run:
