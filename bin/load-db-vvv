@@ -43,7 +43,7 @@ mysql $(wp eval '
 	printf( "--host=%s ", DB_HOST );
 	printf( "--user=%s ", DB_USER );
 	printf( "--password=%s ", DB_PASSWORD );
-	printf( "--default-character-set=utf8 " );
+	printf( "--default-character-set=%s ", DB_CHARSET );
 	printf( "%s ", DB_NAME );
 ') < $dump_file
 

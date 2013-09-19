@@ -28,7 +28,7 @@ mysqldump $(wp eval '
 		printf( "--no-create-db " );
 		printf( "--compact " );
 		printf( "--comments " );
-		printf( "--default-character-set=utf8 " );
+		printf( "--default-character-set=%s ", DB_CHARSET );
 		printf( "--extended-insert=FALSE " );
 		printf( "--set-charset " );
 		printf( "--add-drop-table " );
