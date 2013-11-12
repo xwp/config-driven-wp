@@ -1,0 +1,10 @@
+server {
+    listen       80;
+    listen       443 ssl;
+    server_name  __SERVER_NAME__;
+    root         __ABSPATH__/docroot;
+    include      /etc/nginx/nginx-wp-common.conf;
+    access_log   __ABSPATH__/log/access.log;
+    error_log    __ABSPATH__/log/error.log error;
+    fastcgi_param PHP_VALUE "error_log=__ABSPATH__/log/php_log.txt";
+}

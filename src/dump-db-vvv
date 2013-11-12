@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Dump the site's DB to database/vvv-data.sql
+# Author: Weston Ruter (@westonruter), X-Team <http://x-team.com/wordpress/>
+# Usage: bin/dump-db-vvv
+# Tip: With vassh[1] you can invoke from host machine
+# License: GPLv2+
+# [1]: <https://github.com/x-team/vassh>
+
+set -e
+cd $(dirname $0)/..
+if [ $USER != 'vagrant' ]; then
+	echo "Error: Must be run in the vagrant environment" 1>&2
+	exit 1
+fi
+if [ $(cat config/active-env) != 'vvv' ]; then
+	echo "Error: Only applicable in vvv environment" 1>&2
+	exit 1
+fi
+
+dump_file=database/vvv-data.sql
+
+# Why aren't we just using WP-CLI's db export? Becasue we want extended-inserts for better diffs
+
+mysqldump $(wp eval '
+		printf( "--host=%s ", DB_HOST );
+		printf( "--user=%s ", DB_USER );
+		printf( "--password=%s ", DB_PASSWORD );
+		printf( "--no-create-db " );
+		printf( "--compact " );
+		printf( "--comments " );
+		printf( "--default-character-set=%s ", DB_CHARSET );
+		printf( "--extended-insert=FALSE " );
+		printf( "--set-charset " );
+		printf( "--add-drop-table " );
+		printf( "%s ", DB_NAME );
+	') > $dump_file
+
+echo "Wrote to $dump_file"
