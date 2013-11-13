@@ -24,6 +24,7 @@ return call_user_func(function () {
 		'CONCATENATE_SCRIPTS' => false,
 		'SAVEQUERIES' => true,
 		'DISABLE_WP_CRON' => false, // use traditional wp-cron; we can really slam our system if all sites get pinged every minute
+		'JETPACK_DEV_DEBUG' => true,
 	) );
 
 	/**
