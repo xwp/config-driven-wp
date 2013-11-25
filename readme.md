@@ -7,8 +7,7 @@ often use at [X-Team](http://x-team.com/wordpress/).
 ## Dev Setup
 
 You can get up and running quickly via a [fork][1] of [varying-vagrant-vagrants][2].
-Follow the [First Vagrant Up][3] instructions, but instead of cloning from the **10up** repo, 
-clone from the **x-team** fork and checkout the `auto-site-setup` branch:
+Follow the [First Vagrant Up][3] instructions:
 
 ```sh
 git clone git@github.com:x-team/varying-vagrant-vagrants.git vvv
