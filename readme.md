@@ -12,15 +12,7 @@ Follow the [First Vagrant Up][3] instructions:
 ```sh
 git clone git@github.com:x-team/varying-vagrant-vagrants.git vvv
 cd vvv
-git checkout auto-site-setup
 vagrant up
-```
-
-If you are already using VVV, you can just add the x-team remote and checkout (or merge from) the branch:
-
-```sh
-git remote add -f x-team git@github.com:x-team/varying-vagrant-vagrants.git
-git checkout -b auto-site-setup x-team/auto-site-setup
 ```
 
 You can proceed to add this repo:
